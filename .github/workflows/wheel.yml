@@ -62,6 +62,12 @@ jobs:
          fetch-depth: 25
 
       - uses: astral-sh/setup-uv@v4
+      
+      - name: Test Env Var Generation
+        env:
+          PERSISTENT_BUILD_DIR: "$(pwd)/tmp/g2opy"
+        run: |
+          echo "persistent build dir is: ${PERSISTENT_BUILD_DIR}"
 
       # https://cibuildwheel.pypa.io/en/stable/
       # https://github.com/pypa/manylinux
@@ -75,8 +81,6 @@ jobs:
           CIBW_MANYLINUX_X86_64_IMAGE: ${{ matrix.manylinux_image }}
           CIBW_MANYLINUX_I686_IMAGE: ${{ matrix.manylinux_image }}
           CIBW_MANYLINUX_AARCH64_IMAGE: ${{ matrix.manylinux_image }}          
-        run: |
-            echo "persistent build dir is: ${PERSISTENT_BUILD_DIR}"
 
       - uses: actions/upload-artifact@v4
         with:
