@@ -42,7 +42,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # Window 64 bit
+          # Windows 64 bit
           # - os: windows-latest
             # python: 310
             # platform_id: win_amd64
@@ -55,70 +55,6 @@ jobs:
           # - os: windows-latest
           #   python: 313
           #   platform_id: win_amd64
-
-          # Linux 64 bit manylinux_2_28
-          # - os: ubuntu-latest
-          #   python: 310
-          #   platform_id: manylinux_x86_64
-          #   manylinux_image: manylinux_2_28
-          # - os: ubuntu-latest
-          #   python: 311
-          #   platform_id: manylinux_x86_64
-          #   manylinux_image: manylinux_2_28
-          # - os: ubuntu-latest
-          #   python: 312
-          #   platform_id: manylinux_x86_64
-          #   manylinux_image: manylinux_2_28
-          # - os: ubuntu-latest
-          #   python: 313
-          #   platform_id: manylinux_x86_64
-          #   manylinux_image: manylinux_2_28
-
-          # Linux 64 bit manylinux_2_28
-          # - os: ubuntu-24.04-arm
-          #   python: 310
-          #   platform_id: manylinux_aarch64
-          #   manylinux_image: manylinux_2_28
-          # - os: ubuntu-24.04-arm
-          #   python: 311
-          #   platform_id: manylinux_aarch64
-          #   manylinux_image: manylinux_2_28
-          # - os: ubuntu-24.04-arm
-          #   python: 312
-          #   platform_id: manylinux_aarch64
-          #   manylinux_image: manylinux_2_28
-          # - os: ubuntu-24.04-arm
-          #   python: 313
-          #   platform_id: manylinux_aarch64
-          #   manylinux_image: manylinux_2_28
-
-          ## MacOS x86_64
-          #- os: macos-13
-          #  python: 310
-          #  platform_id: macosx_x86_64
-          #- os: macos-13
-          #  python: 311
-          #  platform_id: macosx_x86_64
-          #- os: macos-13
-          #  python: 312
-          #  platform_id: macosx_x86_64
-          #- os: macos-13
-          #  python: 313
-          #  platform_id: macosx_x86_64
-
-          ## MacOS arm64
-          #- os: macos-14
-          #  python: 310
-          #  platform_id: macosx_arm64
-          #- os: macos-14
-          #  python: 311
-          #  platform_id: macosx_arm64
-          #- os: macos-14
-          #  python: 312
-          #  platform_id: macosx_arm64
-          #- os: macos-14
-          #  python: 313
-          #  platform_id: macosx_arm64
 
     steps:
       - uses: actions/checkout@v4
