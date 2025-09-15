@@ -67,7 +67,7 @@ jobs:
         env:
           PERSISTENT_BUILD_DIR: "${{ github.workspace }}/tmp/g2opy"
         run: |
-          echo "persistent build dir is: ${PERSISTENT_BUILD_DIR}"
+          echo "persistent build dir is: $PERSISTENT_BUILD_DIR"
 
       # https://cibuildwheel.pypa.io/en/stable/
       # https://github.com/pypa/manylinux
@@ -76,7 +76,7 @@ jobs:
         env:
           CIBW_BUILD: cp${{ matrix.python }}-${{ matrix.platform_id }}
           G2O_CACHE_BUILD: true
-          PERSISTENT_BUILD_DIR: "$(pwd)/tmp/g2opy"
+          PERSISTENT_BUILD_DIR: "${{ github.workspace }}/tmp/g2opy"
           CIBW_ARCHS: all
           CIBW_MANYLINUX_X86_64_IMAGE: ${{ matrix.manylinux_image }}
           CIBW_MANYLINUX_I686_IMAGE: ${{ matrix.manylinux_image }}
