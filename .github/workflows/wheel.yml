@@ -71,11 +71,12 @@ jobs:
           CIBW_BUILD: cp${{ matrix.python }}-${{ matrix.platform_id }}
           G2O_CACHE_BUILD: true
           PERSISTENT_BUILD_DIR: "$(pwd)/tmp/g2opy"
-          #BUILD_PATH_ROOT: pwd
           CIBW_ARCHS: all
           CIBW_MANYLINUX_X86_64_IMAGE: ${{ matrix.manylinux_image }}
           CIBW_MANYLINUX_I686_IMAGE: ${{ matrix.manylinux_image }}
-          CIBW_MANYLINUX_AARCH64_IMAGE: ${{ matrix.manylinux_image }}
+          CIBW_MANYLINUX_AARCH64_IMAGE: ${{ matrix.manylinux_image }}          
+        run: |
+            echo "persistent build dir is: ${PERSISTENT_BUILD_DIR}"
 
       - uses: actions/upload-artifact@v4
         with:
