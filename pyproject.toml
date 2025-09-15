@@ -29,8 +29,9 @@ build.tool-args = ["-j4"]
 
 
 [[tool.scikit-build.overrides]]
-if.env = "PERSISTENT_BUILD_DIR"
-build-dir = "${PERSISTENT_BUILD_DIR}"
+#if.env = "PERSISTENT_BUILD_DIR"
+#if.env.G2O_CACHE_BUILD = true
+#build-dir = "${PERSISTENT_BUILD_DIR}"
 
 #if.env.G2O_CACHE_BUILD = true
 #build-dir = "/tmp/g2opy"
