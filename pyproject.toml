@@ -44,7 +44,7 @@ build-frontend = "build[uv]"
 
 
 [tool.cibuildwheel.windows]
-environment = { CFLAGS="/Zi", CXXFLAGS="/Zi", LDFLAGS="/DEBUG", CIBW_CMAKE_BUILD_ARGS="--config Debug", PERSISTENT_BUILD_DIR="$(PERSISTENT_BUILD_DIR)" }
+environment = { CFLAGS="/Zi", CXXFLAGS="/Zi", LDFLAGS="/DEBUG", CIBW_CMAKE_BUILD_ARGS="--config Debug", PERSISTENT_BUILD_DIR="$(env.PERSISTENT_BUILD_DIR)" }
 
 [tool.cibuildwheel.macos]
 environment = { CFLAGS="-g", CXXFLAGS="-g" }
