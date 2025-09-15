@@ -40,7 +40,7 @@ build-frontend = "build[uv]"
 
 
 [tool.cibuildwheel.windows]
-environment = { CFLAGS="/Zi", CXXFLAGS="/Zi", LDFLAGS="/DEBUG" }
+environment = { CFLAGS="/Zi", CXXFLAGS="/Zi", LDFLAGS="/DEBUG", CIBW_CMAKE_BUILD_ARGS="--config Debug" }
 
 [tool.cibuildwheel.macos]
 environment = { CFLAGS="-g", CXXFLAGS="-g" }
@@ -69,7 +69,9 @@ cmake.args = [
  "-DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake",
  "-DCMAKE_BUILD_TYPE=Debug"
 ]
-build.tool-args = ["-maxcpucount:4"]
+build.tool-args = ["-maxcpucount:16"]
+cmake.build-type = "Debug"
+
 
 [[tool.cibuildwheel.overrides]]
 select = "*win*"
