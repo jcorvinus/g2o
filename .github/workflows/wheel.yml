@@ -76,7 +76,7 @@ jobs:
         env:
           CIBW_BUILD: cp${{ matrix.python }}-${{ matrix.platform_id }}
           G2O_CACHE_BUILD: true
-          #PERSISTENT_BUILD_DIR: "${{ github.workspace }}/tmp/g2opy"
+          PERSISTENT_BUILD_DIR: "${{ github.workspace }}/tmp/g2opy"
           SKBUILD_build-dir: "${{ github.workspace }}/tmp/g2opy"
           CIBW_ARCHS: all
           CIBW_MANYLINUX_X86_64_IMAGE: ${{ matrix.manylinux_image }}

@@ -28,10 +28,10 @@ build.targets = ["g2opy"]
 build.tool-args = ["-j4"]
 
 
-#[[tool.scikit-build.overrides]]
-#if.env = "PERSISTENT_BUILD_DIR"
+[[tool.scikit-build.overrides]]
+if.env = "PERSISTENT_BUILD_DIR"
 #if.env.G2O_CACHE_BUILD = true
-#build-dir = "${PERSISTENT_BUILD_DIR}"
+build-dir = "${PERSISTENT_BUILD_DIR}"
 
 #if.env.G2O_CACHE_BUILD = true
 #build-dir = "/tmp/g2opy"
@@ -44,7 +44,7 @@ build-frontend = "build[uv]"
 
 
 [tool.cibuildwheel.windows]
-environment = { CFLAGS="/Zi", CXXFLAGS="/Zi", LDFLAGS="/DEBUG", CIBW_CMAKE_BUILD_ARGS="--config Debug", PERSISTENT_BUILD_DIR="${PERSISTENT_BUILD_DIR}" }
+environment = { CFLAGS="/Zi", CXXFLAGS="/Zi", LDFLAGS="/DEBUG", CIBW_CMAKE_BUILD_ARGS="--config Debug", PERSISTENT_BUILD_DIR="$(PERSISTENT_BUILD_DIR)" }
 
 [tool.cibuildwheel.macos]
 environment = { CFLAGS="-g", CXXFLAGS="-g" }
