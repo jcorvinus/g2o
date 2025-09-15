@@ -15,7 +15,7 @@ requires-python = ">=3.10"
 [tool.scikit-build]
 cmake.args = [
   "-DBUILD_SHARED_LIBS:=Off",
-  "CMAKE_BUILD_TYPE:=Debug",  # or "RelWithDebInfo" if size is a concern
+  "-DCMAKE_BUILD_TYPE:STRING=Debug",  # or "RelWithDebInfo" if size is a concern
   "-DG2O_BUILD_PYTHON:=On",
   "-DG2O_BUILD_APPS:=Off",
   "-DG2O_BUILD_EXAMPLES:=Off",
