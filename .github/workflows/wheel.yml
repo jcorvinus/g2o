@@ -67,7 +67,7 @@ jobs:
         env:
           PERSISTENT_BUILD_DIR: "${{ github.workspace }}/tmp/g2opy"
         run: |
-          echo "persistent build dir is: $PERSISTENT_BUILD_DIR"
+          echo "persistent build dir is: ${{ env.PERSISTENT_BUILD_DIR }}"
 
       # https://cibuildwheel.pypa.io/en/stable/
       # https://github.com/pypa/manylinux
