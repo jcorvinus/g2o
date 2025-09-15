@@ -65,7 +65,7 @@ jobs:
       
       - name: Test Env Var Generation
         env:
-          PERSISTENT_BUILD_DIR: "$(pwd)/tmp/g2opy"
+          PERSISTENT_BUILD_DIR: "${{ github.workspace }}/tmp/g2opy"
         run: |
           echo "persistent build dir is: ${PERSISTENT_BUILD_DIR}"
 
