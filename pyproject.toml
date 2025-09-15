@@ -30,7 +30,8 @@ build.tool-args = ["-j4"]
 
 [[tool.scikit-build.overrides]]
 if.env.G2O_CACHE_BUILD = true
-build-dir = "/tmp/g2opy"
+#build-dir = "/tmp/g2opy"
+build-dir = env.PERSISTENT_BUILD_PATH
 
 [tool.cibuildwheel]
 build-frontend = "build[uv]"
