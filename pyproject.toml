@@ -69,6 +69,7 @@ before-all = "apk add eigen"
 if.platform-system = "^win32"
 inherit.cmake.args = "append"
 cmake.args = [
+ "-DG2O_USE_CHOLMOD:=Off",
  "-DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake",
  "-DCMAKE_BUILD_TYPE=Debug"
 ]
@@ -78,4 +79,4 @@ cmake.build-type = "Debug"
 
 [[tool.cibuildwheel.overrides]]
 select = "*win*"
-before-all = "vcpkg --triplet x64-windows install eigen3 nlohmann-json"
+before-all = "vcpkg --triplet x64-windows install eigen3 nlohmann-json suitesparse"
