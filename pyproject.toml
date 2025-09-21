@@ -80,4 +80,4 @@ cmake.build-type = "Debug"
 
 [[tool.cibuildwheel.overrides]]
 select = "*win*"
-before-all = "vcpkg --triplet x64-windows install eigen3 nlohmann-json suitesparse"
+before-all = "vcpkg --triplet x64-windows install eigen3 nlohmann-json"
