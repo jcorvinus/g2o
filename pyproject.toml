@@ -70,6 +70,7 @@ if.platform-system = "^win32"
 inherit.cmake.args = "append"
 cmake.args = [
  "-DG2O_USE_CHOLMOD:=Off",
+ "-DG2O_USE_CSPARSE:=Off",
  "-DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake",
  "-DCMAKE_BUILD_TYPE=Debug"
 ]
