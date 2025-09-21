@@ -68,8 +68,8 @@ before-all = "apk add eigen"
 [[tool.scikit-build.overrides]]
 if.platform-system = "^win32"
 inherit.cmake.args = "append"
+# "-DG2O_USE_CHOLMOD=ON",
 cmake.args = [
- "-DG2O_USE_CHOLMOD=ON",
  "-DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake",
  "-DCMAKE_BUILD_TYPE=Debug"
 ]
