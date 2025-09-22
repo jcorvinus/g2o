@@ -75,6 +75,8 @@ jobs:
           else 
           { 
               echo "persistent build dir '${{ env.PERSISTENT_BUILD_DIR }}' did not exist" 
+              $childDirs = Get=ChildItem -Recurse -Directory
+              Write-Output $childDirs
           }
 
       # https://cibuildwheel.pypa.io/en/stable/
