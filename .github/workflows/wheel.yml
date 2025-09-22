@@ -67,7 +67,7 @@ jobs:
         env:
           PERSISTENT_BUILD_DIR: "${{ github.workspace }}/tmp/g2opy"
         run: |
-          if ([System.IO.Directory]::Exists(${{ env.PERSISTENT_BUILD_DIR }})) 
+          if ([System.IO.Directory]::Exists("${{ env.PERSISTENT_BUILD_DIR }}")) 
           { 
               echo "persistent build dir is: ${{ env.PERSISTENT_BUILD_DIR }}" 
               rmdir /s /q ${{ env.PERSISTENT_BUILD_DIR }} 
