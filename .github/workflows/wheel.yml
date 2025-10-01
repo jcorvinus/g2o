@@ -62,22 +62,27 @@ jobs:
          fetch-depth: 25
 
       - uses: astral-sh/setup-uv@v4
-      
+
       - name: Clear PersistentBuildDir
         env:
           PERSISTENT_BUILD_DIR: "${{ github.workspace }}/tmp/g2opy"
         run: |
-          if ([System.IO.Directory]::Exists("${{ env.PERSISTENT_BUILD_DIR }}")) 
-          { 
-              echo "persistent build dir is: ${{ env.PERSISTENT_BUILD_DIR }}" 
-              rmdir /s /q ${{ env.PERSISTENT_BUILD_DIR }} 
-          } 
-          else 
-          { 
-              echo "persistent build dir '${{ env.PERSISTENT_BUILD_DIR }}' did not exist" 
+          if ([System.IO.Directory]::Exists("${{ env.PERSISTENT_BUILD_DIR }}"))
+          {
+              echo "persistent build dir is: ${{ env.PERSISTENT_BUILD_DIR }}"
+              rmdir /s /q ${{ env.PERSISTENT_BUILD_DIR }}
+          }
+          else
+          {
+              echo "persistent build dir '${{ env.PERSISTENT_BUILD_DIR }}' did not exist"
               $childDirs = Get-ChildItem -Recurse -Directory
               Write-Output $childDirs
           }
+
+      - name: Install Windows build dependencies
+        if: startsWith(matrix.os, 'windows')
+        run: |
+          vcpkg --triplet x64-windows install eigen3 nlohmann-json suitesparse lapack-reference openblas
 
       # https://cibuildwheel.pypa.io/en/stable/
       # https://github.com/pypa/manylinux

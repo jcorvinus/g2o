@@ -44,7 +44,7 @@ build-frontend = "build[uv]"
 
 
 [tool.cibuildwheel.windows]
-environment = { CFLAGS="/Zi", CXXFLAGS="/Zi", LDFLAGS="/DEBUG", CIBW_CMAKE_BUILD_ARGS="--config Debug" }
+environment = { CFLAGS="/Zi", CXXFLAGS="/Zi", LDFLAGS="/DEBUG", CIBW_CMAKE_BUILD_ARGS="--config Debug", BLA_VENDOR="OpenBLAS", BLA_STATIC="ON" }
 
 [tool.cibuildwheel.macos]
 environment = { CFLAGS="-g", CXXFLAGS="-g" }
@@ -69,8 +69,8 @@ before-all = "apk add eigen"
 if.platform-system = "^win32"
 inherit.cmake.args = "append"
 cmake.args = [
- "-DG2O_USE_CHOLMOD:=Off",
- "-DG2O_USE_CSPARSE:=Off",
+ "-DG2O_USE_CHOLMOD:=On",
+ "-DG2O_USE_CSPARSE:=On",
  "-DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake",
  "-DCMAKE_BUILD_TYPE=Debug"
 ]
@@ -80,4 +80,4 @@ cmake.build-type = "Debug"
 
 [[tool.cibuildwheel.overrides]]
 select = "*win*"
-before-all = "vcpkg --triplet x64-windows install eigen3 nlohmann-json"
+before-all = "vcpkg --triplet x64-windows install eigen3 nlohmann-json suitesparse lapack-reference openblas"
