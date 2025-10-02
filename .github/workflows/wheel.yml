@@ -82,7 +82,7 @@ jobs:
       - name: Install Windows build dependencies
         if: startsWith(matrix.os, 'windows')
         run: |
-          vcpkg --triplet x64-windows install eigen3 nlohmann-json suitesparse lapack-reference openblas
+          vcpkg --triplet x64-windows install eigen3 nlohmann-json suitesparse lapack-reference openblas metis
 
       # https://cibuildwheel.pypa.io/en/stable/
       # https://github.com/pypa/manylinux
