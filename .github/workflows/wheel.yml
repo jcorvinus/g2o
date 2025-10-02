@@ -84,6 +84,26 @@ jobs:
         run: |
           vcpkg --triplet x64-windows install eigen3 nlohmann-json suitesparse lapack-reference openblas metis
 
+      - name: Log Windows vcpkg state
+        if: startsWith(matrix.os, 'windows')
+        shell: pwsh
+        run: |
+          Write-Host "=== vcpkg list ==="
+          vcpkg list
+          Write-Host "=== suitesparse headers ==="
+          Get-ChildItem -Path C:/vcpkg/installed/x64-windows/include/suitesparse
+          Write-Host "=== suitesparse share directory ==="
+          Get-ChildItem -Path C:/vcpkg/installed/x64-windows/share/suitesparse
+          Write-Host "=== suitesparse CMake packages ==="
+          Get-ChildItem -Path C:/vcpkg/installed/x64-windows/share/suitesparse -Filter *.cmake -Recurse
+          Write-Host "=== release libraries ==="
+          Get-ChildItem -Path C:/vcpkg/installed/x64-windows/lib
+          Write-Host "=== debug libraries ==="
+          Get-ChildItem -Path C:/vcpkg/installed/x64-windows/debug/lib
+          Write-Host "=== relevant environment variables ==="
+          Get-ChildItem Env:BLA*
+          Get-ChildItem Env:CMAKE*
+
       # https://cibuildwheel.pypa.io/en/stable/
       # https://github.com/pypa/manylinux
       - name: Build wheels
