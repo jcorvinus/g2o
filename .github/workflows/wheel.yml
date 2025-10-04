@@ -79,6 +79,14 @@ jobs:
               Write-Output $childDirs
           }
 
+      - name: Cache Windows vcpkg downloads
+        if: startsWith(matrix.os, 'windows')
+        uses: actions/cache@v4
+        with:
+          path: |
+            C:\vcpkg\downloads
+          key: vcpkg-downloads-${{ runner.os }}-eigen3-nlohmann-json-suitesparse-suitesparse-spqr-lapack-reference-openblas-metis
+
       - name: Install Windows build dependencies
         if: startsWith(matrix.os, 'windows')
         run: |
