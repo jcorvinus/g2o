@@ -54,7 +54,7 @@ LDFLAGS = "/DEBUG"
 CIBW_CMAKE_BUILD_ARGS = "--config Debug"
 BLA_VENDOR = "OpenBLAS"
 CMAKE_FIND_DEBUG_MODE = "1"
-PATH = "C:/vcpkg/installed/x64-windows/bin;C:/vcpkg/installed/x64-windows/debug/bin;%PATH%"
+PATH = "C:/vcpkg/installed/x64-windows/bin;C:/vcpkg/installed/x64-windows/debug/bin;{PATH}"
 
 [tool.cibuildwheel.macos]
 environment = { CFLAGS="-g", CXXFLAGS="-g" }
