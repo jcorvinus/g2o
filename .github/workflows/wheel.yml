@@ -87,6 +87,11 @@ jobs:
             C:\vcpkg\downloads
           key: vcpkg-downloads-${{ runner.os }}-eigen3-nlohmann-json-suitesparse-suitesparse-spqr-lapack-reference-openblas-metis
 
+      - name: Update vcpkg
+        if: startsWith(matrix.os, 'windows')
+        shell: pwsh
+        run: git -C C:/vcpkg pull --ff-only
+
       - name: Install Windows build dependencies
         if: startsWith(matrix.os, 'windows')
         run: |
