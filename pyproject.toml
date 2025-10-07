@@ -54,7 +54,7 @@ LDFLAGS = "/DEBUG"
 CIBW_CMAKE_BUILD_ARGS = "--config Debug"
 BLA_VENDOR = "OpenBLAS"
 CMAKE_FIND_DEBUG_MODE = "1"
-PATH = "C:/vcpkg/installed/x64-windows/bin;C:/vcpkg/installed/x64-windows/debug/bin;{PATH}"
+PATH = "C:/vcpkg/installed/x64-windows/bin;C:/vcpkg/installed/x64-windows/debug/bin;%PATH%"
 
 [tool.cibuildwheel.macos]
 environment = { CFLAGS="-g", CXXFLAGS="-g" }
@@ -90,6 +90,4 @@ cmake.build-type = "Debug"
 
 [[tool.cibuildwheel.overrides]]
 select = "*win*"
-before-all = [
-  '''C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -NoLogo -NoProfile -Command "$ErrorActionPreference = 'Stop'; $vcpkg = 'C:/vcpkg/vcpkg.exe'; & $vcpkg --triplet x64-windows install eigen3 nlohmann-json suitesparse suitesparse-spqr lapack-reference openblas metis; Write-Host '=== vcpkg list (inside cibuildwheel) ==='; & $vcpkg list; Write-Host '=== vcpkg owns spqr (inside cibuildwheel) ==='; & $vcpkg owns spqr; Write-Host '=== suitesparse headers (inside cibuildwheel) ==='; Get-ChildItem -Path C:/vcpkg/installed/x64-windows/include/suitesparse; Write-Host '=== suitesparse SPQR headers (inside cibuildwheel) ==='; Get-ChildItem -Path C:/vcpkg/installed/x64-windows/include -Filter *spqr* -Recurse; Write-Host '=== suitesparse share directory (inside cibuildwheel) ==='; Get-ChildItem -Path C:/vcpkg/installed/x64-windows/share/suitesparse; Write-Host '=== suitesparse CMake packages (inside cibuildwheel) ==='; Get-ChildItem -Path C:/vcpkg/installed/x64-windows/share/suitesparse -Filter *.cmake -Recurse; Write-Host '=== release libraries (inside cibuildwheel) ==='; Get-ChildItem -Path C:/vcpkg/installed/x64-windows/lib; Write-Host '=== release SPQR libraries (inside cibuildwheel) ==='; Get-ChildItem -Path C:/vcpkg/installed/x64-windows/lib -Filter *spqr*.* -Recurse; Write-Host '=== debug libraries (inside cibuildwheel) ==='; Get-ChildItem -Path C:/vcpkg/installed/x64-windows/debug/lib; Write-Host '=== debug SPQR libraries (inside cibuildwheel) ==='; Get-ChildItem -Path C:/vcpkg/installed/x64-windows/debug/lib -Filter *spqr*.* -Recurse; Write-Host '=== relevant environment variables (inside cibuildwheel) ==='; Get-ChildItem Env:BLA*; Get-ChildItem Env:CMAKE*; Get-ChildItem Env:VCPKG*"'''
-]
+before-all = ["C:/vcpkg/vcpkg.exe --triplet x64-windows install eigen3 nlohmann-json suitesparse suitesparse-spqr lapack-reference openblas metis"]
