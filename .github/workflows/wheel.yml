@@ -108,6 +108,11 @@ jobs:
           $updatedPath = "$Env:PATH;" + ($vcpkgBinPaths -join ';')
           "PATH=$updatedPath" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 
+      - name: Install delvewheel
+        if: startsWith(matrix.os, 'windows')
+        shell: pwsh
+        run: python -m pip install --upgrade delvewheel
+
       - name: Log Windows vcpkg state
         if: startsWith(matrix.os, 'windows')
         shell: pwsh
