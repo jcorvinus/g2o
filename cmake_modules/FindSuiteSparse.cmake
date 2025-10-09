@@ -299,6 +299,105 @@ endif (NOT BLAS_FOUND)
 # LAPACK.
 find_package(LAPACK QUIET)
 if (NOT LAPACK_FOUND)
+  # The vcpkg toolchain supplies LAPACK as an import library that depends on
+  # OpenBLAS.  When no Fortran compiler is available (the default on the
+  # Windows CI builders) CMake's FindLAPACK module cannot link its probe
+  # executable and leaves LAPACK_FOUND unset even though the libraries exist.
+  # Attempt to locate the vcpkg-provided import libs directly so we can surface
+  # them to the rest of this module.
+  set(_suitesparse_vcpkg_roots)
+  if (VCPKG_TARGET_TRIPLET AND DEFINED ENV{VCPKG_INSTALLATION_ROOT})
+    list(APPEND _suitesparse_vcpkg_roots
+      "$ENV{VCPKG_INSTALLATION_ROOT}/installed/${VCPKG_TARGET_TRIPLET}")
+  endif()
+  if (DEFINED ENV{VCPKG_INSTALLATION_ROOT} AND DEFINED ENV{VCPKG_DEFAULT_TRIPLET})
+    list(APPEND _suitesparse_vcpkg_roots
+      "$ENV{VCPKG_INSTALLATION_ROOT}/installed/$ENV{VCPKG_DEFAULT_TRIPLET}")
+  endif()
+  if (DEFINED ENV{VCPKG_INSTALLATION_ROOT})
+    list(APPEND _suitesparse_vcpkg_roots
+      "$ENV{VCPKG_INSTALLATION_ROOT}/installed/x64-windows")
+  endif()
+  list(REMOVE_DUPLICATES _suitesparse_vcpkg_roots)
+
+  if (_suitesparse_vcpkg_roots)
+    unset(_suitesparse_lapack_release)
+    unset(_suitesparse_lapack_debug)
+    unset(_suitesparse_blas_release)
+    unset(_suitesparse_blas_debug)
+    foreach(_suitesparse_root IN LISTS _suitesparse_vcpkg_roots)
+      if (NOT EXISTS "${_suitesparse_root}")
+        continue()
+      endif()
+      if (NOT _suitesparse_lapack_release)
+        find_library(_suitesparse_lapack_release
+          NAMES lapack
+          PATHS
+            "${_suitesparse_root}/lib"
+          NO_DEFAULT_PATH)
+      endif()
+      if (NOT _suitesparse_lapack_debug)
+        find_library(_suitesparse_lapack_debug
+          NAMES lapack
+          PATHS
+            "${_suitesparse_root}/debug/lib"
+          NO_DEFAULT_PATH)
+      endif()
+      if (NOT _suitesparse_blas_release)
+        find_library(_suitesparse_blas_release
+          NAMES openblas
+          PATHS
+            "${_suitesparse_root}/lib"
+          NO_DEFAULT_PATH)
+      endif()
+      if (NOT _suitesparse_blas_debug)
+        find_library(_suitesparse_blas_debug
+          NAMES openblas
+          PATHS
+            "${_suitesparse_root}/debug/lib"
+          NO_DEFAULT_PATH)
+      endif()
+    endforeach()
+
+    # Build a list of LAPACK/OpenBLAS libraries, preserving debug/release
+    # variants when both are available.
+    set(_suitesparse_lapack_libs)
+    if (_suitesparse_lapack_release AND _suitesparse_lapack_debug
+        AND NOT _suitesparse_lapack_release STREQUAL _suitesparse_lapack_debug)
+      list(APPEND _suitesparse_lapack_libs
+        optimized "${_suitesparse_lapack_release}"
+        debug "${_suitesparse_lapack_debug}")
+    elseif (_suitesparse_lapack_release)
+      list(APPEND _suitesparse_lapack_libs "${_suitesparse_lapack_release}")
+    elseif (_suitesparse_lapack_debug)
+      list(APPEND _suitesparse_lapack_libs "${_suitesparse_lapack_debug}")
+    endif()
+
+    if (_suitesparse_blas_release AND _suitesparse_blas_debug
+        AND NOT _suitesparse_blas_release STREQUAL _suitesparse_blas_debug)
+      list(APPEND _suitesparse_lapack_libs
+        optimized "${_suitesparse_blas_release}"
+        debug "${_suitesparse_blas_debug}")
+    elseif (_suitesparse_blas_release)
+      list(APPEND _suitesparse_lapack_libs "${_suitesparse_blas_release}")
+    elseif (_suitesparse_blas_debug)
+      list(APPEND _suitesparse_lapack_libs "${_suitesparse_blas_debug}")
+    endif()
+
+    if (_suitesparse_lapack_libs)
+      set(LAPACK_FOUND TRUE)
+      set(LAPACK_LIBRARIES ${_suitesparse_lapack_libs})
+      set(LAPACK_LINKER_FLAGS "")
+      set(LAPACK95_LIBRARIES ${_suitesparse_lapack_libs})
+      string(REPLACE ";" " " _suitesparse_lapack_message
+        "${_suitesparse_lapack_libs}")
+      message(STATUS "Using vcpkg-supplied LAPACK import libraries:"
+        " ${_suitesparse_lapack_message}")
+    endif()
+  endif()
+endif (NOT LAPACK_FOUND)
+
+if (NOT LAPACK_FOUND)
   suitesparse_report_not_found(
     "Did not find LAPACK library (required for SuiteSparse).")
 endif (NOT LAPACK_FOUND)
